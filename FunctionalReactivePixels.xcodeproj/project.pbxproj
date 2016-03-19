@@ -14,6 +14,9 @@
 		F905893F1C9DA3B300A8F473 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F905893E1C9DA3B300A8F473 /* Assets.xcassets */; };
 		F90589421C9DA3B300A8F473 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F90589401C9DA3B300A8F473 /* LaunchScreen.storyboard */; };
 		F905894D1C9DA3B300A8F473 /* FunctionalReactivePixelsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F905894C1C9DA3B300A8F473 /* FunctionalReactivePixelsTests.m */; };
+		F90589591C9DA4A000A8F473 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F90589581C9DA4A000A8F473 /* ReactiveCocoa.framework */; };
+		F90589601C9DA52000A8F473 /* FRPGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F905895F1C9DA52000A8F473 /* FRPGalleryViewController.m */; };
+		F90589641C9DA58000A8F473 /* FRPGalleryFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F90589631C9DA58000A8F473 /* FRPGalleryFlowLayout.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +43,11 @@
 		F90589481C9DA3B300A8F473 /* FunctionalReactivePixelsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FunctionalReactivePixelsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F905894C1C9DA3B300A8F473 /* FunctionalReactivePixelsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FunctionalReactivePixelsTests.m; sourceTree = "<group>"; };
 		F905894E1C9DA3B300A8F473 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F90589581C9DA4A000A8F473 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
+		F905895E1C9DA52000A8F473 /* FRPGalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRPGalleryViewController.h; sourceTree = "<group>"; };
+		F905895F1C9DA52000A8F473 /* FRPGalleryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRPGalleryViewController.m; sourceTree = "<group>"; };
+		F90589621C9DA58000A8F473 /* FRPGalleryFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRPGalleryFlowLayout.h; sourceTree = "<group>"; };
+		F90589631C9DA58000A8F473 /* FRPGalleryFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRPGalleryFlowLayout.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F90589591C9DA4A000A8F473 /* ReactiveCocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +74,7 @@
 			children = (
 				F90589311C9DA3B300A8F473 /* FunctionalReactivePixels */,
 				F905894B1C9DA3B300A8F473 /* FunctionalReactivePixelsTests */,
+				F905895A1C9DA4B400A8F473 /* Frameworks */,
 				F90589301C9DA3B300A8F473 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -81,6 +91,7 @@
 		F90589311C9DA3B300A8F473 /* FunctionalReactivePixels */ = {
 			isa = PBXGroup;
 			children = (
+				F905895B1C9DA4DF00A8F473 /* UI */,
 				F90589351C9DA3B300A8F473 /* AppDelegate.h */,
 				F90589361C9DA3B300A8F473 /* AppDelegate.m */,
 				F90589381C9DA3B300A8F473 /* ViewController.h */,
@@ -111,6 +122,49 @@
 			path = FunctionalReactivePixelsTests;
 			sourceTree = "<group>";
 		};
+		F905895A1C9DA4B400A8F473 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F90589581C9DA4A000A8F473 /* ReactiveCocoa.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F905895B1C9DA4DF00A8F473 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				F90589611C9DA55400A8F473 /* Layout */,
+				F905895D1C9DA4F000A8F473 /* ViewController */,
+				F905895C1C9DA4E700A8F473 /* View */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		F905895C1C9DA4E700A8F473 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		F905895D1C9DA4F000A8F473 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				F905895E1C9DA52000A8F473 /* FRPGalleryViewController.h */,
+				F905895F1C9DA52000A8F473 /* FRPGalleryViewController.m */,
+			);
+			name = ViewController;
+			sourceTree = "<group>";
+		};
+		F90589611C9DA55400A8F473 /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				F90589621C9DA58000A8F473 /* FRPGalleryFlowLayout.h */,
+				F90589631C9DA58000A8F473 /* FRPGalleryFlowLayout.m */,
+			);
+			name = Layout;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -121,6 +175,7 @@
 				F905892B1C9DA3B300A8F473 /* Sources */,
 				F905892C1C9DA3B300A8F473 /* Frameworks */,
 				F905892D1C9DA3B300A8F473 /* Resources */,
+				F90589571C9DA44900A8F473 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -206,11 +261,30 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		F90589571C9DA44900A8F473 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/ReactiveCocoa.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		F905892B1C9DA3B300A8F473 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F90589601C9DA52000A8F473 /* FRPGalleryViewController.m in Sources */,
+				F90589641C9DA58000A8F473 /* FRPGalleryFlowLayout.m in Sources */,
 				F905893A1C9DA3B300A8F473 /* ViewController.m in Sources */,
 				F90589371C9DA3B300A8F473 /* AppDelegate.m in Sources */,
 				F90589341C9DA3B300A8F473 /* main.m in Sources */,
@@ -341,7 +415,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = FunctionalReactivePixels/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = es.alexsalom.FunctionalReactivePixels;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -352,7 +431,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = FunctionalReactivePixels/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = es.alexsalom.FunctionalReactivePixels;
 				PRODUCT_NAME = "$(TARGET_NAME)";
