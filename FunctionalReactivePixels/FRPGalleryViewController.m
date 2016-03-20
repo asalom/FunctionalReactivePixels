@@ -78,7 +78,7 @@ static NSString *CellIdentifier = @"Cell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   FRPCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-  [cell setPhotoModel:self.photos[indexPath.row]];
+  cell.model = self.photos[indexPath.row];
   
   return cell;
 }
