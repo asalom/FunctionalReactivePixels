@@ -1,0 +1,14 @@
+//
+//  FunctionalReactivePixels-Prefix.pch
+//  FunctionalReactivePixels
+//
+//  Created by Alex Salom on 20/3/16.
+//  Copyright © 2016 Alex Salom © alexsalom.es. All rights reserved.
+//
+
+#import <ReactiveCocoa/ReactiveCocoa.h>
+#import <500px-iOS-api/PXAPI.h>
+#import <libextobjc/EXTScope.h>
+
+#import "AppDelegate.h"
+#define APP ((AppDelegate *)[[UIApplication sharedApplication] delegate])
