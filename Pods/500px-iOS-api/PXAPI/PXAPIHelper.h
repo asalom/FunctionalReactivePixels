@@ -92,12 +92,12 @@ typedef NS_ENUM(NSInteger, PXAPIHelperMode) {
        consumerKey:(NSString *)consumerKey
     consumerSecret:(NSString *)consumerSecret;
 
-@property (weak, nonatomic, readonly) NSString *host;
-@property (weak, nonatomic, readonly) NSString *consumerKey;
-@property (weak, nonatomic, readonly) NSString *consumerSecret;
+@property (strong, nonatomic, readonly) NSString *host;
+@property (strong, nonatomic, readonly) NSString *consumerKey;
+@property (strong, nonatomic, readonly) NSString *consumerSecret;
 
-@property (weak, nonatomic, readonly) NSString *authToken;
-@property (weak, nonatomic, readonly) NSString *authSecret;
+@property (strong, nonatomic, readonly) NSString *authToken;
+@property (strong, nonatomic, readonly) NSString *authSecret;
 
 @property (nonatomic, readonly) PXAPIHelperMode authMode;
 
@@ -173,6 +173,14 @@ typedef NS_ENUM(NSInteger, PXAPIHelperMode) {
 -(NSURLRequest *)urlRequestForSearchTag:(NSString *)searchTag page:(NSUInteger)page resultsPerPage:(NSUInteger)resultsPerPage;
 -(NSURLRequest *)urlRequestForSearchTag:(NSString *)searchTag page:(NSUInteger)page resultsPerPage:(NSUInteger)resultsPerPage photoSizes:(PXPhotoModelSize)photoSizesMask;
 -(NSURLRequest *)urlRequestForSearchTag:(NSString *)searchTag page:(NSUInteger)page resultsPerPage:(NSUInteger)resultsPerPage photoSizes:(PXPhotoModelSize)photoSizesMask except:(PXPhotoModelCategory)excludedCategory;
+
+-(NSURLRequest *)urlRequestForSearchGeo:(NSString *)searchGeo;
+-(NSURLRequest *)urlRequestForSearchGeo:(NSString *)searchGeo page:(NSUInteger)page;
+-(NSURLRequest *)urlRequestForSearchGeo:(NSString *)searchGeo page:(NSUInteger)page resultsPerPage:(NSUInteger)resultsPerPage;
+-(NSURLRequest *)urlRequestForSearchGeo:(NSString *)searchGeo page:(NSUInteger)page resultsPerPage:(NSUInteger)resultsPerPage photoSizes:(PXPhotoModelSize)photoSizesMask;
+-(NSURLRequest *)urlRequestForSearchGeo:(NSString *)searchGeo page:(NSUInteger)page resultsPerPage:(NSUInteger)resultsPerPage photoSizes:(PXPhotoModelSize)photoSizesMask except:(PXPhotoModelCategory)excludedCategory;
+
+-(NSURLRequest *)urlRequestForSearchTerm:(NSString *)searchTerm searchTag:(NSString *)searchTag searchGeo:(NSString *)searchGeo page:(NSUInteger)page resultsPerPage:(NSUInteger)resultsPerPage photoSizes:(PXPhotoModelSize)photoSizesMask except:(PXPhotoModelCategory)excludedCategory;
 
 #pragma mark - Users
 

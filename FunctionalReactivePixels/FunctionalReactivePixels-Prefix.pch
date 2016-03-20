@@ -12,3 +12,4 @@
 
 #import "AppDelegate.h"
 #define APP ((AppDelegate *)[[UIApplication sharedApplication] delegate])
+#define API [PXRequest apiHelper]

@@ -37,12 +37,12 @@
 }
 
 + (NSURLRequest *)popularURLRequest {
-  return [APP.apiHelper urlRequestForPhotoFeature:PXAPIHelperPhotoFeaturePopular
-                                   resultsPerPage:100
-                                             page:0
-                                       photoSizes:PXPhotoModelSizeThumbnail
-                                        sortOrder:PXAPIHelperSortOrderRating
-                                           except:PXPhotoModelCategoryNude];
+  return [API urlRequestForPhotoFeature:PXAPIHelperPhotoFeaturePopular
+                         resultsPerPage:100
+                                   page:0
+                             photoSizes:PXPhotoModelSizeThumbnail
+                              sortOrder:PXAPIHelperSortOrderRating
+                                 except:PXPhotoModelCategoryNude];
 }
 
 
@@ -66,7 +66,7 @@
 }
 
 + (NSURLRequest *)photoDetailsURLRequest:(FRPPhotoModel *)photoModel {
-  return [APP.apiHelper urlRequestForPhotoID:photoModel.identifier.integerValue];
+  return [API urlRequestForPhotoID:photoModel.identifier.integerValue];
 }
 
 + (void)configurePhotoModel:(FRPPhotoModel *)photoModel withDictionary:(NSDictionary *)dictionary {
