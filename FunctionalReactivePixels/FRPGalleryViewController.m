@@ -16,7 +16,7 @@
 
 static NSString *CellIdentifier = @"Cell";
 
-@interface FRPGalleryViewController () <FRPFullSizePhotoViewControllerDelegate>
+@interface FRPGalleryViewController ()
 @property (nonatomic, strong) NSArray *photos;
 @property (nonatomic, strong) id collectionViewDelegate;
 @end
@@ -59,11 +59,12 @@ static NSString *CellIdentifier = @"Cell";
   self.collectionViewDelegate = [[RACDelegateProxy alloc] initWithProtocol:@protocol(UICollectionViewDelegate)];
   [[self.collectionViewDelegate rac_signalForSelector:@selector(collectionView:didSelectItemAtIndexPath:)]
    subscribeNext:^(RACTuple *arguments) {
+     @strongify(self)
      FRPFullSizedPhotoViewModel *viewModel = [[FRPFullSizedPhotoViewModel alloc] initWithPhotoArray:self.photos
                                                                                   initialPhotoIndex:[arguments.second indexPath].item];
      FRPFullSizePhotoViewController *viewController = [[FRPFullSizePhotoViewController alloc] init];
      viewController.viewModel = viewModel;
-     viewController.delegate = self;
+     viewController.delegate = (id<FRPFullSizePhotoViewControllerDelegate>)self;
      [self.navigationController pushViewController:viewController animated:YES];
    }];
 
