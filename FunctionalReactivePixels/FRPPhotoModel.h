@@ -17,6 +17,6 @@
 @property (nonatomic, copy) NSString *thumbnailURL;
 @property (nonatomic, copy) NSData *thumbnailData;
 @property (nonatomic, copy) NSString *fullsizedURL;
-@property (nonatomic, copy) NSString *fullsizedData;
+@property (nonatomic, copy) NSData *fullsizedData;
 
 @end
