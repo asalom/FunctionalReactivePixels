@@ -11,11 +11,13 @@
 #import "FRPCell.h"
 #import "FRPPhotoImporter.h"
 #import "FRPFullSizePhotoViewController.h"
+#import <ReactiveCocoa/RACDelegateProxy.h>
 
 static NSString *CellIdentifier = @"Cell";
 
 @interface FRPGalleryViewController () <FRPFullSizePhotoViewControllerDelegate>
 @property (nonatomic, strong) NSArray *photos;
+@property (nonatomic, strong) id collectionViewDelegate;
 @end
 
 @implementation FRPGalleryViewController
@@ -42,23 +44,31 @@ static NSString *CellIdentifier = @"Cell";
     [self.collectionView reloadData];
   }];
   
-  [self loadPopularPhotos];
-}
-
-- (void)loadPopularPhotos {
-  [[FRPPhotoImporter importPhotos] subscribeNext:^(id x) {
-    self.photos = x;
-  } error:^(NSError *error) {
-    NSLog(@"Couldn't fetch photos from 500px: %@", error);
+  RACDelegateProxy *viewControllerDelegate = [[RACDelegateProxy alloc] initWithProtocol:@protocol(FRPFullSizePhotoViewControllerDelegate)];
+  [[viewControllerDelegate rac_signalForSelector:@selector(userDidScroll:toPhotoAtIndex:)
+                                    fromProtocol:@protocol(FRPFullSizePhotoViewControllerDelegate)]
+   subscribeNext:^(RACTuple *value) {
+    @strongify(self)
+     [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:[value.second integerValue]
+                                                                      inSection:0]
+                                 atScrollPosition:UICollectionViewScrollPositionCenteredVertically
+                                         animated:NO];
   }];
-}
+  
+  self.collectionViewDelegate = [[RACDelegateProxy alloc] initWithProtocol:@protocol(UICollectionViewDelegate)];
+  [[self.collectionViewDelegate rac_signalForSelector:@selector(collectionView:didSelectItemAtIndexPath:)]
+   subscribeNext:^(RACTuple *arguments) {
+     FRPFullSizePhotoViewController *viewController = [[FRPFullSizePhotoViewController alloc] initWithPhotos:self.photos
+                                                                                           currentPhotoIndex:[arguments.second indexPath].item ];
+     viewController.delegate = self;
+     [self.navigationController pushViewController:viewController animated:YES];
+   }];
 
-#pragma mark - FRPFullSizePhotoViewControllerDelegate
-- (void)userDidScroll:(FRPFullSizePhotoViewController *)viewController
-       toPhotoAtIndex:(NSUInteger)index {
-  [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]
-                              atScrollPosition:UICollectionViewScrollPositionCenteredVertically
-                                      animated:NO];
+  RAC(self, photos) = [[[[FRPPhotoImporter importPhotos]
+  doCompleted:^{
+    @strongify(self);
+    [self.collectionView reloadData];
+  }] logError] catchTo:[RACSignal empty]];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -71,13 +81,6 @@ static NSString *CellIdentifier = @"Cell";
   [cell setPhotoModel:self.photos[indexPath.row]];
   
   return cell;
-}
-
-#pragma mark - UICollectionViewDelegate
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-  FRPFullSizePhotoViewController *viewController = [[FRPFullSizePhotoViewController alloc] initWithPhotos:self.photos currentPhotoIndex:indexPath.item];
-  viewController.delegate = self;
-  [self.navigationController pushViewController:viewController animated:YES];
 }
 
 @end
