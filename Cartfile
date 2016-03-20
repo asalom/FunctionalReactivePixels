@@ -1,4 +1,0 @@
-github "ReactiveCocoa/ReactiveCocoa" ~> 2.5
-github "jspahrsummers/libextobjc" ~> 0.3
-github "500px/500px-iOS-api" ~> 1.0.4
-github "SVProgressHUD/SVProgressHUD" ~> 0.9
