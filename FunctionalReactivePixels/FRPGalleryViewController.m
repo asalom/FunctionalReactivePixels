@@ -11,6 +11,7 @@
 #import "FRPCell.h"
 #import "FRPPhotoImporter.h"
 #import "FRPFullSizePhotoViewController.h"
+#import "FRPFullSizedPhotoViewModel.h"
 #import <ReactiveCocoa/RACDelegateProxy.h>
 
 static NSString *CellIdentifier = @"Cell";
@@ -58,8 +59,10 @@ static NSString *CellIdentifier = @"Cell";
   self.collectionViewDelegate = [[RACDelegateProxy alloc] initWithProtocol:@protocol(UICollectionViewDelegate)];
   [[self.collectionViewDelegate rac_signalForSelector:@selector(collectionView:didSelectItemAtIndexPath:)]
    subscribeNext:^(RACTuple *arguments) {
-     FRPFullSizePhotoViewController *viewController = [[FRPFullSizePhotoViewController alloc] initWithPhotos:self.photos
-                                                                                           currentPhotoIndex:[arguments.second indexPath].item ];
+     FRPFullSizedPhotoViewModel *viewModel = [[FRPFullSizedPhotoViewModel alloc] initWithPhotoArray:self.photos
+                                                                                  initialPhotoIndex:[arguments.second indexPath].item];
+     FRPFullSizePhotoViewController *viewController = [[FRPFullSizePhotoViewController alloc] init];
+     viewController.viewModel = viewModel;
      viewController.delegate = self;
      [self.navigationController pushViewController:viewController animated:YES];
    }];

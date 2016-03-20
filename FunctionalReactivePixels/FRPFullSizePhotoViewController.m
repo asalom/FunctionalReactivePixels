@@ -9,47 +9,39 @@
 #import "FRPFullSizePhotoViewController.h"
 #import "FRPPhotoModel.h"
 #import "FRPPhotoViewController.h"
+#import "FRPFullSizedPhotoViewModel.h"
 
 @interface FRPFullSizePhotoViewController () <UIPageViewControllerDataSource, UIPageViewControllerDelegate>
-@property (nonatomic, strong) NSArray<FRPPhotoModel *> *photos;
 @property (nonatomic, strong) UIPageViewController *pageViewController;
 @end
 
 @implementation FRPFullSizePhotoViewController
-
-- (instancetype)initWithPhotos:(NSArray<FRPPhotoModel *> *)photos currentPhotoIndex:(NSUInteger)index
-{
-  self = [super init];
-  if (self) {
-    self.photos = photos;
-    self.title = self.photos[index].photoName;
-    
-    self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
-                                                              navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
-                                                                            options:@{UIPageViewControllerOptionInterPageSpacingKey: @30}];
-    self.pageViewController.dataSource = self;
-    self.pageViewController.delegate = self;
-    [self addChildViewController:self.pageViewController];
-    [self.pageViewController setViewControllers:@[[self photoViewControllerForIndex:index]]
-                                      direction:UIPageViewControllerNavigationDirectionForward
-                                       animated:NO
-                                     completion:nil];
-  }
-  return self;
-}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
   
   self.view.backgroundColor = [UIColor blackColor];
   
+  self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
+                                                            navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
+                                                                          options:@{UIPageViewControllerOptionInterPageSpacingKey: @30}];
+  self.pageViewController.dataSource = self;
+  self.pageViewController.delegate = self;
+  [self addChildViewController:self.pageViewController];
+  [self.pageViewController setViewControllers:@[[self photoViewControllerForIndex:self.viewModel.initialPhotoIndex]]
+                                    direction:UIPageViewControllerNavigationDirectionForward
+                                     animated:NO
+                                   completion:nil];
+  
+  self.title = self.viewModel.initialPhotoName;
+  
   self.pageViewController.view.frame = self.view.bounds;
   [self.view addSubview:self.pageViewController.view];
 }
 
 - (FRPPhotoViewController *)photoViewControllerForIndex:(NSInteger)index {
-  if (index >= 0 && index < self.photos.count) {
-    FRPPhotoModel *photoModel = self.photos[index];
+  if (index >= 0 && index < self.viewModel.photos.count) {
+    FRPPhotoModel *photoModel = self.viewModel.photos[index];
     return [[FRPPhotoViewController alloc] initWithPhotoModel:(FRPPhotoModel *)photoModel index:index];
   }
   
