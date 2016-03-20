@@ -13,12 +13,12 @@
 #import "FRPFullSizePhotoViewController.h"
 #import "FRPFullSizedPhotoViewModel.h"
 #import <ReactiveCocoa/RACDelegateProxy.h>
+#import "FRPGalleryViewModel.h"
 
 static NSString *CellIdentifier = @"Cell";
 
 @interface FRPGalleryViewController ()
-@property (nonatomic, strong) NSArray *photos;
-@property (nonatomic, strong) id collectionViewDelegate;
+@property (nonatomic, strong) FRPGalleryViewModel *viewModel;
 @end
 
 @implementation FRPGalleryViewController
@@ -27,7 +27,7 @@ static NSString *CellIdentifier = @"Cell";
   FRPGalleryFlowLayout *flowLayout = [[FRPGalleryFlowLayout alloc] init];
   self = [super initWithCollectionViewLayout:flowLayout];
   if (self) {
-    
+    self.viewModel = [[FRPGalleryViewModel alloc] init];
   }
   return self;
 }
@@ -40,14 +40,13 @@ static NSString *CellIdentifier = @"Cell";
   [self.collectionView registerClass:[FRPCell class] forCellWithReuseIdentifier:CellIdentifier];
   
   @weakify(self);
-  [RACObserve(self, photos) subscribeNext:^(id x) {
+  [RACObserve(self.viewModel, photos) subscribeNext:^(id x) {
     @strongify(self);
     [self.collectionView reloadData];
   }];
   
-  RACDelegateProxy *viewControllerDelegate = [[RACDelegateProxy alloc] initWithProtocol:@protocol(FRPFullSizePhotoViewControllerDelegate)];
-  [[viewControllerDelegate rac_signalForSelector:@selector(userDidScroll:toPhotoAtIndex:)
-                                    fromProtocol:@protocol(FRPFullSizePhotoViewControllerDelegate)]
+  [[self rac_signalForSelector:@selector(userDidScroll:toPhotoAtIndex:)
+                  fromProtocol:@protocol(FRPFullSizePhotoViewControllerDelegate)]
    subscribeNext:^(RACTuple *value) {
     @strongify(self)
      [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:[value.second integerValue]
@@ -56,33 +55,30 @@ static NSString *CellIdentifier = @"Cell";
                                          animated:NO];
   }];
   
-  self.collectionViewDelegate = [[RACDelegateProxy alloc] initWithProtocol:@protocol(UICollectionViewDelegate)];
-  [[self.collectionViewDelegate rac_signalForSelector:@selector(collectionView:didSelectItemAtIndexPath:)]
+  [[self rac_signalForSelector:@selector(collectionView:didSelectItemAtIndexPath:)]
    subscribeNext:^(RACTuple *arguments) {
      @strongify(self)
-     FRPFullSizedPhotoViewModel *viewModel = [[FRPFullSizedPhotoViewModel alloc] initWithPhotoArray:self.photos
-                                                                                  initialPhotoIndex:[arguments.second indexPath].item];
+     NSIndexPath *indexPath = arguments.second;
+     FRPFullSizedPhotoViewModel *viewModel = [[FRPFullSizedPhotoViewModel alloc] initWithPhotoArray:self.viewModel.photos
+                                                                                  initialPhotoIndex:indexPath.item];
      FRPFullSizePhotoViewController *viewController = [[FRPFullSizePhotoViewController alloc] init];
      viewController.viewModel = viewModel;
      viewController.delegate = (id<FRPFullSizePhotoViewControllerDelegate>)self;
      [self.navigationController pushViewController:viewController animated:YES];
    }];
 
-  RAC(self, photos) = [[[[FRPPhotoImporter importPhotos]
-  doCompleted:^{
-    @strongify(self);
-    [self.collectionView reloadData];
-  }] logError] catchTo:[RACSignal empty]];
+  self.collectionView.delegate = nil;
+  self.collectionView.delegate = self;
 }
 
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-  return self.photos.count;
+  return self.viewModel.photos.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   FRPCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-  cell.model = self.photos[indexPath.row];
+  cell.model = self.viewModel.photos[indexPath.row];
   
   return cell;
 }

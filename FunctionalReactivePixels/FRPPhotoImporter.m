@@ -11,38 +11,32 @@
 
 @implementation FRPPhotoImporter
 
-+ (RACReplaySubject *)importPhotos {
-  RACReplaySubject *subject = [RACReplaySubject subject];
-  
++ (RACSignal *)importPhotos {
+  return [[[[[self requestPhotoData] deliverOn:[RACScheduler mainThreadScheduler]] map:^id(NSData *data) {
+    id results = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    
+    return [[[results[@"photos"] rac_sequence] map:^id(NSDictionary *photoDictionary) {
+      FRPPhotoModel *model = [FRPPhotoModel new];
+      
+      [self configurePhotoModel:model withDictionary:photoDictionary];
+      [self downloadThumbnailForPhotoModel:model];
+      
+      return model;
+    }] array];
+  }] publish] autoconnect];
+}
+
++ (RACSignal *)requestPhotoData {
   NSURLRequest *request = [self popularURLRequest];
-  [NSURLConnection sendAsynchronousRequest:request
-                                     queue:[NSOperationQueue mainQueue]
-                         completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
-                           if (data) {
-                             id results = [NSJSONSerialization JSONObjectWithData:data
-                                                                          options:0
-                                                                            error:nil];
-                             [subject sendNext:[[[results[@"photos"] rac_sequence] map:^id(id value) {
-                               FRPPhotoModel *model = [FRPPhotoModel new];
-                               [self configurePhotoModel:model withDictionary:value];
-                               [self downloadThumbnailForPhotoModel:model];
-                               return model;
-                             }] array]];
-                             [subject sendCompleted];
-                           } else {
-                             [subject sendError:connectionError];
-                           }
-                         }];
-  return subject;
+  
+  return [[NSURLConnection rac_sendAsynchronousRequest:request] reduceEach:^id(NSURLResponse *response, NSData *data){
+    return data;
+  }];
 }
 
 + (NSURLRequest *)popularURLRequest {
-  return [API urlRequestForPhotoFeature:PXAPIHelperPhotoFeaturePopular
-                         resultsPerPage:100
-                                   page:0
-                             photoSizes:PXPhotoModelSizeThumbnail
-                              sortOrder:PXAPIHelperSortOrderRating
-                                 except:PXPhotoModelCategoryNude];
+  id apiHelper = [[PXAPIHelper alloc] initWithHost:nil consumerKey:@"DC2To2BS0ic1ChKDK15d44M42YHf9gbUJgdFoF0m" consumerSecret:@"i8WL4chWoZ4kw9fh3jzHK7XzTer1y5tUNvsTFNnB"];
+  return [apiHelper urlRequestForPhotoFeature:PXAPIHelperPhotoFeaturePopular resultsPerPage:100 page:0 photoSizes:PXPhotoModelSizeThumbnail sortOrder:PXAPIHelperSortOrderRating except:PXPhotoModelCategoryNude];
 }
 
 
