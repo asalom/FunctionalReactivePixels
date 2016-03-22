@@ -27,6 +27,7 @@
 		F910E7121CA0876B0097BFB5 /* FRPPhotoViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F910E7111CA0876B0097BFB5 /* FRPPhotoViewModel.m */; };
 		F910E7141CA1C8360097BFB5 /* FRPFullSizedPhotoViewModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F910E7131CA1C8360097BFB5 /* FRPFullSizedPhotoViewModelTests.m */; };
 		F9AB0FE51CA1CE5E002D9833 /* FRPGalleryViewModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AB0FE41CA1CE5E002D9833 /* FRPGalleryViewModelTests.m */; };
+		F9AB0FE71CA1D087002D9833 /* FRPPhotoViewModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AB0FE61CA1D087002D9833 /* FRPPhotoViewModelTests.m */; };
 		FD126CBE21E544E108CF928D /* libPods-FunctionalReactivePixels.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD53F5360ED22581086FAF4B /* libPods-FunctionalReactivePixels.a */; };
 /* End PBXBuildFile section */
 
@@ -83,6 +84,7 @@
 		F910E7111CA0876B0097BFB5 /* FRPPhotoViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRPPhotoViewModel.m; sourceTree = "<group>"; };
 		F910E7131CA1C8360097BFB5 /* FRPFullSizedPhotoViewModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRPFullSizedPhotoViewModelTests.m; sourceTree = "<group>"; };
 		F9AB0FE41CA1CE5E002D9833 /* FRPGalleryViewModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRPGalleryViewModelTests.m; sourceTree = "<group>"; };
+		F9AB0FE61CA1D087002D9833 /* FRPPhotoViewModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRPPhotoViewModelTests.m; sourceTree = "<group>"; };
 		FC43752D9168294DD58C26F2 /* Pods-FunctionalReactivePixels.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FunctionalReactivePixels.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FunctionalReactivePixels/Pods-FunctionalReactivePixels.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -173,6 +175,7 @@
 				F905894E1C9DA3B300A8F473 /* Info.plist */,
 				F910E7131CA1C8360097BFB5 /* FRPFullSizedPhotoViewModelTests.m */,
 				F9AB0FE41CA1CE5E002D9833 /* FRPGalleryViewModelTests.m */,
+				F9AB0FE61CA1D087002D9833 /* FRPPhotoViewModelTests.m */,
 			);
 			path = FunctionalReactivePixelsTests;
 			sourceTree = "<group>";
@@ -446,6 +449,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9AB0FE71CA1D087002D9833 /* FRPPhotoViewModelTests.m in Sources */,
 				F910E7141CA1C8360097BFB5 /* FRPFullSizedPhotoViewModelTests.m in Sources */,
 				F9AB0FE51CA1CE5E002D9833 /* FRPGalleryViewModelTests.m in Sources */,
 				F905894D1C9DA3B300A8F473 /* FunctionalReactivePixelsTests.m in Sources */,
