@@ -28,7 +28,7 @@
 }
 
 - (NSString *)initialPhotoName {
-  return self.photos[self.initialPhotoIndex].photoName;
+  return [self photoModelAtIndex:self.initialPhotoIndex].photoName;
 }
 
 - (FRPPhotoModel *)photoModelAtIndex:(NSInteger)index {

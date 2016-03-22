@@ -19,10 +19,14 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-    RAC(self, photos) = [[[FRPPhotoImporter importPhotos] logError] catchTo:[RACSignal empty]];
+    RAC(self, photos) = [self importPhotosSignal];
   }
   
   return self;
+}
+
+- (RACSignal *)importPhotosSignal {
+  return [[[FRPPhotoImporter importPhotos] logError] catchTo:[RACSignal empty]];
 }
 
 @end
